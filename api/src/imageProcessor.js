@@ -21,7 +21,7 @@ const imageProcessor = (filename) => {
         try{
             const resizeWorker = new Worker(pathToResizeWorker, {
                 workerData: {
-                    source: soursePath,
+                    source: sourcePath,
                     destination: resizedDestination,
                 },
             });
