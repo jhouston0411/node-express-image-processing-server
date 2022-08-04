@@ -3,7 +3,7 @@ const {Worker, isMainThread} = require('worker_threads');
 
 
 const pathToResizeWorker = path.resolve(__dirname, 'resizeWorker.js')
-const 
+
 
 
 
