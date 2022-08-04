@@ -29,7 +29,7 @@ const imageProcessor = (filename) => {
                     source: sourcePath,
                     destination: resizedDestination,
                 },
-              });
+                });
                 const monochromeWorker = new Worker(pathToMonochromeWorker, {
                     workerData: {
                         source: sourcePath,
