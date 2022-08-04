@@ -34,4 +34,8 @@ const fileFilter = (request, file, callback) => {
 
     return responce.status(201).json({success: true});
  })
+
+ router.get('/photo-viewer', (request, responce) =>{
+    responce.sendFile(photoPath)
+ })
 module.exports = router
