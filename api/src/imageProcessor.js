@@ -10,7 +10,12 @@ const uploadPathResolver = (filename) => {
 
 
 
-const imageProcessor = () => {
+const imageProcessor = (filename) => {
+   const sourcePath = uploadPathResolver(filename)
+   const resizedDestination = uploadPathResolver('resized-' + filename)
+   const monochromeDestination = uploadPathResolver('monochrome-' + filename)
+
+
    return new Promise((resolve, reject) => {
     if(isMainThread){
 
