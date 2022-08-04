@@ -45,6 +45,16 @@ const imageProcessor = (filename) => {
                     resolve('resizeWorker finished processing')
                 })
 
+                resizeWorker.on('error', (error) => {
+                    reject(new Error(error.message));
+                })
+
+                resizeWorker.on('exit', (code) => {
+                    if(code !== 0) {
+                        reject(new Error('Exited with status code' + code))
+                    }
+                })
+
             }catch(error){
                 reject(error);
             }
@@ -52,7 +62,7 @@ const imageProcessor = (filename) => {
             reject(new Error('not on main thread'))
         }
 
-        resolve();
+        
     })
 }
 
