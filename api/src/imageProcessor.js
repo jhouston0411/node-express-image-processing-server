@@ -26,7 +26,7 @@ const imageProcessor = (filename) => {
                 },
             });
         } catch(error){
-
+            reject(error)
         }
     }else{
         reject(new Error('not on main thread'))
