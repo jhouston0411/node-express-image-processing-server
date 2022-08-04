@@ -24,7 +24,7 @@ const imageProcessor = (filename) => {
         if(isMainThread){
            
             try{
-              const resizeWorker new Worker(pathToResizeWorker, {
+              const resizeWorker = new Worker(pathToResizeWorker, {
                 workerData: {
                     source: sourcePath,
                     destination: resizedDestination,
