@@ -12,8 +12,8 @@ const uploadPathResolver = (filename) => {
 
 
 const imageProcessor = (filename) => {
-   const resizeWorkerFinished = false
-   const monochromeWorkerFinished = false
+   const resizeWorkerFinished = false;
+   const monochromeWorkerFinished = false;
 
    const sourcePath = uploadPathResolver(filename)
    const resizedDestination = uploadPathResolver('resized-' + filename)
@@ -58,10 +58,20 @@ const imageProcessor = (filename) => {
             monochromeWorker.on('message', (message) => {
                 monochromeWorkerFinished = true
 
-                if(resizeWorkerFinished){
+                if (resizeWorkerFinished) {
                     resolve('monochromeWorker finished processing');
                 }
             });
+
+            monochromeWorker.on('error', (error) => {
+                reject(new Error(error.message));
+            })
+
+            monochromeWorker.on('exit', (code) => {
+                if(code !== 0){
+                    reject(new Error('Exited with status code ' + code))
+                }
+            })
 
         } catch(error){
             reject(error)
