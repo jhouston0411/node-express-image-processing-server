@@ -40,7 +40,7 @@ const imageProcessor = (filename) => {
                 })
 
                 resizeWorker.on('message', (message) => {
-                    resizeWorkerFinish = true
+                    resizeWorkerFinished = true
 
                     resolve('resizeWorker finished processing')
                 })
