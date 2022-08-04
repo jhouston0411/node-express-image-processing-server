@@ -13,7 +13,7 @@ const uploadPathResolver = (filename) => {
 
 
 const imageProcessor = (filename) => {
-    const resizeWorkerFinish = false;
+    const resizeWorkerFinished = false;
     const monochromeWorkerFinished = false;
     const sourcePath = uploadPathResolver(filename)
     const resizedDestination = uploadPathResolver('resized-' + filename);
