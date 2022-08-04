@@ -12,8 +12,8 @@ const uploadPathResolver = (filename) => {
 
 
 const imageProcessor = (filename) => {
-   const resizeWorkerFinished = false;
-   const monochromeWorkerFinished = false;
+   const resizeWorkerFinished = false
+   const monochromeWorkerFinished = false
 
    const sourcePath = uploadPathResolver(filename)
    const resizedDestination = uploadPathResolver('resized-' + filename)
@@ -38,7 +38,7 @@ const imageProcessor = (filename) => {
             });
 
             resizeWorker.on('message', (message) => {
-                resizeWorkerFinished = true;
+                resizeWorkerFinished = true
                
                 if(monochromeWorkerFinished){
                   resolve('resizeWorker finished processing');
@@ -56,10 +56,10 @@ const imageProcessor = (filename) => {
             });
 
             monochromeWorker.on('message', (message) => {
-                monochromeWorkerFinished = true;
+                monochromeWorkerFinished = true
 
                 if(resizeWorkerFinished){
-                    resolve('monochromeWorker finished pocessing');
+                    resolve('monochromeWorker finished processing');
                 }
             });
 
