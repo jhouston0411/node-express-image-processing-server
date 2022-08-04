@@ -24,5 +24,11 @@ const fileFilter = (request, file, callback) => {
     fileFilter,
     storage,
  })
- 
+
+
+ router.post('/upload', upload.single('photo'), (request, responce) => {
+    if(request.fileValidationError) return responce.status(400).json({error: request.fileValidationError})
+
+    return responce.status(201).json({success: true});
+ })
 module.exports = router
