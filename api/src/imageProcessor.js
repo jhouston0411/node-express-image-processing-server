@@ -11,6 +11,8 @@ const uploadPathResolver = (filename) => {
 
 
 const imageProcessor = (filename) => {
+   const resizeWorkerFinished = false
+
    const sourcePath = uploadPathResolver(filename)
    const resizedDestination = uploadPathResolver('resized-' + filename)
    const monochromeDestination = uploadPathResolver('monochrome-' + filename)
@@ -32,6 +34,12 @@ const imageProcessor = (filename) => {
                     destination: monochromeDestination,
                 },
             });
+
+            resizeWorker.on('message', (message) => {
+                resizeWorkerFinished = true;
+
+                resolve('resizeWorker finished processing');
+            });
         } catch(error){
             reject(error)
         }
@@ -39,9 +47,7 @@ const imageProcessor = (filename) => {
         reject(new Error('not on main thread'))
     }
 
-
-    resolve();
-   })
+   });
 };
 
 
