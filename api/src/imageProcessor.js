@@ -1,4 +1,5 @@
 const path = require('path')
+const { reject } = require('ramda')
 const {Worker, isMainThread} = require('worker_threads')
 
 const pathToResizeWorker = path.resolve(__dirname, 'resizeWorker.js')
@@ -11,7 +12,8 @@ const uploadPathResolver = (filename) => {
 
 
 const imageProcessor = (filename) => {
-   const resizeWorkerFinished = false
+   const resizeWorkerFinished = false;
+   const monochromeWorkerFinished = false;
 
    const sourcePath = uploadPathResolver(filename)
    const resizedDestination = uploadPathResolver('resized-' + filename)
@@ -37,8 +39,10 @@ const imageProcessor = (filename) => {
 
             resizeWorker.on('message', (message) => {
                 resizeWorkerFinished = true;
-
-                resolve('resizeWorker finished processing');
+               
+                if(monochromeWorkerFinished){
+                  resolve('resizeWorker finished processing');
+                }
             });
 
             resizeWorker.on('error', (error) => {
@@ -50,15 +54,24 @@ const imageProcessor = (filename) => {
                     reject(new Error('Exited with status code ' + code));
                 }
             });
-            
+
+            monochromeWorker.on('message', (message) => {
+                monochromeWorkerFinished = true;
+
+                if(resizeWorkerFinished){
+                    resolve('monochromeWorker finished pocessing');
+                }
+            });
+
         } catch(error){
             reject(error)
         }
     }else{
         reject(new Error('not on main thread'))
     }
-
+    reject(error);
    });
+   
 };
 
 
